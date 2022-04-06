@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<script type="text/javascript" src="{{ url_for('static', filename = 'admin/admin_home.js') }}"></script>
+
+<div class="columns">
+    <div class="column is-12">
+        <div class="content">
+            <h1 class="title is-3">Welcome to the Admin Portal</h1>
+        </div>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-12">
+        <div class="box">
+            Placeholder for login informaion
+        </div>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-12">
+        <div class="box">
+            <button class="button is-success" id="professor_table">Manage the Professor Table</button>
+            <button class="button is-info" id="gender_table">Manage the Gender Table</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

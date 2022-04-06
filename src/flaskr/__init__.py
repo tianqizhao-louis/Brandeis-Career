@@ -2,6 +2,9 @@ import os
 
 from flask import Flask
 
+from . import home
+from . import portal
+
 
 def create_app(test_config=None):
     # create and configure the app
@@ -24,8 +27,9 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from . import home
     app.register_blueprint(home.bp)
+    app.register_blueprint(portal.bp)
+
     app.add_url_rule('/', endpoint='index')
 
     return app

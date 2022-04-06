@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<script>
+    let table_type = {{ table_type | tojson }}
+    let fetch_table = {{ fetch_table | tojson }}
+</script>
+
+<script type="text/javascript" src="{{ url_for('static', filename = 'admin/table_render.js') }}"></script>
+
+<div class="columns">
+    <div class="column is-12">
+        <h3 class="title is-3">Manage {{ table_type | capitalize }} Table</h3>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-12">
+        <div id="render-table" class="block">
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
