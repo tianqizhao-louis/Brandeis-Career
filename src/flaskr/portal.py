@@ -26,10 +26,25 @@ def render_table(table_type):
     if table_type == 'professor':
         fetch_table = database_server.get_professor_table_all()
         return render_template("admin/table_render.html",
-                               table_type=table_type,
+                               table_type=fetch_table["table_name"],
                                fetch_table=fetch_table)
     elif table_type == 'gender':
         fetch_table = database_server.get_gender_table_all()
         return render_template("admin/table_render.html",
-                               table_type=table_type,
+                               table_type=fetch_table["table_name"],
+                               fetch_table=fetch_table)
+    elif table_type == 'concentration':
+        fetch_table = database_server.get_concentration_table_all()
+        return render_template("admin/table_render.html",
+                               table_type=fetch_table["table_name"],
+                               fetch_table=fetch_table)
+    elif table_type == 'job-merged-table':
+        fetch_table = database_server.get_job_merged_table_all()
+        return render_template("admin/table_render.html",
+                               table_type=fetch_table["table_name"],
+                               fetch_table=fetch_table)
+    elif table_type == 'company':
+        fetch_table = database_server.get_company_table_all()
+        return render_template("admin/table_render.html",
+                               table_type=fetch_table["table_name"],
                                fetch_table=fetch_table)

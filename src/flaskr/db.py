@@ -67,7 +67,7 @@ class Database:
             result = cursor.fetchall()
         self.close_connection(db_connection)
 
-        result_dict = {}
+        table_dict = {}
 
         for each_prof in result:
             professor_id = int(each_prof[0])
@@ -76,8 +76,9 @@ class Database:
             new_prof = Professor(professor_id=professor_id,
                                  first_name=first_name,
                                  last_name=last_name)
-            result_dict[professor_id] = vars(new_prof)
-        return result_dict
+            table_dict[professor_id] = vars(new_prof)
+        professor_table = ProfessorTable(table_dict=table_dict)
+        return vars(professor_table)
 
     def get_gender_table_all(self):
         db_connection = self.get_connection()
@@ -87,13 +88,92 @@ class Database:
             result = cursor.fetchall()
         self.close_connection(db_connection)
 
-        result_list = []
+        table_dict = {}
 
         for each_gender in result:
             gender_text = str(each_gender[0])
             new_gender = Gender(gender_text=gender_text)
-            result_list.append(vars(new_gender))
-        return result_list
+            table_dict[gender_text] = vars(new_gender)
+        gender_table = GenderTable(table_dict=table_dict)
+        return vars(gender_table)
+
+    def get_concentration_table_all(self):
+        db_connection = self.get_connection()
+        sql_line = """
+            SELECT concentration_id AS 'concentration_id',
+                concentration_name AS 'concentration_name',
+                concentration_type AS 'concentration_type'
+            FROM concentration
+        """
+        with db_connection.cursor() as cursor:
+            cursor.execute(sql_line)
+            result = cursor.fetchall()
+        self.close_connection(db_connection)
+
+        table_dict = {}
+
+        for each_concentration in result:
+            concentration_id = int(each_concentration[0])
+            concentration_name = str(each_concentration[1])
+            concentration_type = str(each_concentration[2])
+            new_concentration = Concentration(concentration_id=concentration_id,
+                                              concentration_name=concentration_name,
+                                              concentration_type=concentration_type)
+            table_dict[concentration_id] = vars(new_concentration)
+        concentration_table = ConcentrationTable(table_dict=table_dict)
+        return vars(concentration_table)
+
+    def get_job_merged_table_all(self):
+        db_connection = self.get_connection()
+        sql_line = """
+            SELECT job_merged_id AS 'job_merged_id',
+                job_name AS 'job_name'
+            FROM job_merged_table
+        """
+        with db_connection.cursor() as cursor:
+            cursor.execute(sql_line)
+            result = cursor.fetchall()
+        self.close_connection(db_connection)
+
+        table_dict = {}
+
+        for each_job_merged in result:
+            job_merged_id = int(each_job_merged[0])
+            job_name = str(each_job_merged[1])
+            new_each_job_merged = JobMerged(job_merged_id=job_merged_id,
+                                            job_name=job_name)
+            table_dict[job_merged_id] = vars(new_each_job_merged)
+        job_merged_table_collect = JobMergedTable(table_dict=table_dict)
+        return vars(job_merged_table_collect)
+
+    def get_company_table_all(self):
+        db_connection = self.get_connection()
+        sql_line = """
+            SELECT company_id AS 'company_id',
+                company_name AS 'company_name',
+                company_city AS 'company_city',
+                company_state AS 'company_state'
+            FROM company
+        """
+        with db_connection.cursor() as cursor:
+            cursor.execute(sql_line)
+            result = cursor.fetchall()
+        self.close_connection(db_connection)
+
+        table_dict = {}
+
+        for each_company in result:
+            company_id = int(each_company[0])
+            company_name = str(each_company[1])
+            company_city = str(each_company[2])
+            company_state = str(each_company[3])
+            new_company = Company(company_id=company_id,
+                                  company_name=company_name,
+                                  company_city=company_city,
+                                  company_state=company_state)
+            table_dict[company_id] = vars(new_company)
+        company_table = CompanyTable(table_dict=table_dict)
+        return vars(company_table)
 
 
 class Alumni:
@@ -121,6 +201,77 @@ class Professor:
         self.last_name = last_name
 
 
+class ProfessorTable:
+    def __init__(self, table_dict, schema=None, table_name="professor"):
+        if schema is None:
+            schema = ["professor_id", "first_name", "last_name"]
+        self.table_name = table_name
+        self.schema = schema
+
+        self.table_dict = table_dict
+
+
 class Gender:
     def __init__(self, gender_text):
         self.gender_text = gender_text
+
+
+class GenderTable:
+    def __init__(self, table_dict, schema=None, table_name="gender"):
+        if schema is None:
+            schema = ["gender_text"]
+        self.table_name = table_name
+        self.schema = schema
+
+        self.table_dict = table_dict
+
+
+class Concentration:
+    def __init__(self, concentration_id, concentration_name, concentration_type):
+        self.concentration_id = concentration_id
+        self.concentration_name = concentration_name
+        self.concentration_type = concentration_type
+
+
+class ConcentrationTable:
+    def __init__(self, table_dict, schema=None, table_name="concentration"):
+        if schema is None:
+            schema = ["concentration_id", "concentration_name", "concentration_type"]
+        self.schema = schema
+        self.table_name = table_name
+
+        self.table_dict = table_dict
+
+
+class JobMerged:
+    def __init__(self, job_merged_id, job_name):
+        self.job_merged_id = job_merged_id
+        self.job_name = job_name
+
+
+class JobMergedTable:
+    def __init__(self, table_dict, schema=None, table_name="job_merged_table"):
+        if schema is None:
+            schema = ["job_merged_id", "job_name"]
+        self.schema = schema
+        self.table_name = table_name
+
+        self.table_dict = table_dict
+
+
+class Company:
+    def __init__(self, company_id, company_name, company_city, company_state):
+        self.company_id = company_id
+        self.company_name = company_name
+        self.company_city = company_city
+        self.company_state = company_state
+
+
+class CompanyTable:
+    def __init__(self, table_dict, schema=None, table_name="company"):
+        if schema is None:
+            schema = ["company_id", "company_name", "company_city", "company_state"]
+        self.schema = schema
+        self.table_name = table_name
+
+        self.table_dict = table_dict

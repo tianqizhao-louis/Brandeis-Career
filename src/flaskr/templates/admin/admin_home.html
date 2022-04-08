@@ -23,8 +23,24 @@
 <div class="columns">
     <div class="column is-12">
         <div class="box">
+            <p>
+                <strong>Database Schema</strong>
+            </p>
+            <figure class="is-3by2">
+                <img src="{{ url_for('static', filename = 'assets/db-schema.png') }}">
+            </figure>
+        </div>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-12">
+        <div class="box">
             <button class="button is-success" id="professor_table">Manage the Professor Table</button>
             <button class="button is-info" id="gender_table">Manage the Gender Table</button>
+            <button class="button is-warning" id="concentration_table">Manage the Concentration Table</button>
+            <button class="button is-danger" id="job_merged_table">Manage the Job Merged Table</button>
+            <button class="button is-link" id="company_table">Manage the Company Table</button>
         </div>
     </div>
 </div>
