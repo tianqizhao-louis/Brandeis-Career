@@ -22,29 +22,40 @@ def render_table(table_type):
                       password=os.environ.get("MYSQL_PASSWORD"),
                       database=os.environ.get("MYSQL_DATABASE"))
 
-    fetch_table = None
+    data_tuple = None
     if table_type == 'professor':
-        fetch_table = database_server.get_professor_table_all()
+        data_tuple = database_server.get_professor_table_all()
         return render_template("admin/table_render.html",
-                               table_type=fetch_table["table_name"],
-                               fetch_table=fetch_table)
+                               table_type=data_tuple[0],
+                               table_columns=data_tuple[1],
+                               table_dict=data_tuple[2])
     elif table_type == 'gender':
-        fetch_table = database_server.get_gender_table_all()
+        data_tuple = database_server.get_gender_table_all()
         return render_template("admin/table_render.html",
-                               table_type=fetch_table["table_name"],
-                               fetch_table=fetch_table)
+                               table_type=data_tuple[0],
+                               table_columns=data_tuple[1],
+                               table_dict=data_tuple[2])
     elif table_type == 'concentration':
-        fetch_table = database_server.get_concentration_table_all()
+        data_tuple = database_server.get_concentration_table_all()
         return render_template("admin/table_render.html",
-                               table_type=fetch_table["table_name"],
-                               fetch_table=fetch_table)
+                               table_type=data_tuple[0],
+                               table_columns=data_tuple[1],
+                               table_dict=data_tuple[2])
     elif table_type == 'job-merged-table':
-        fetch_table = database_server.get_job_merged_table_all()
+        data_tuple = database_server.get_job_merged_table_all()
         return render_template("admin/table_render.html",
-                               table_type=fetch_table["table_name"],
-                               fetch_table=fetch_table)
+                               table_type=data_tuple[0],
+                               table_columns=data_tuple[1],
+                               table_dict=data_tuple[2])
     elif table_type == 'company':
-        fetch_table = database_server.get_company_table_all()
+        data_tuple = database_server.get_company_table_all()
         return render_template("admin/table_render.html",
-                               table_type=fetch_table["table_name"],
-                               fetch_table=fetch_table)
+                               table_type=data_tuple[0],
+                               table_columns=data_tuple[1],
+                               table_dict=data_tuple[2])
+    elif table_type == 'alumni':
+        data_tuple = database_server.get_alumni_table_all()
+        return render_template("admin/table_render.html",
+                               table_type=data_tuple[0],
+                               table_columns=data_tuple[1],
+                               table_dict=data_tuple[2])

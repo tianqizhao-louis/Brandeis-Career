@@ -21,7 +21,12 @@ function createTableBody(table_head, table_dict) {
 
 function createTable(table_name, table_head, table_dict) {
     let table_render = document.createElement('table');
-    table_render.className = 'table';
+    table_render.classList.add('table');
+    table_render.classList.add('is-bordered');
+    table_render.classList.add('is-striped');
+    table_render.classList.add('is-narrow');
+    table_render.classList.add('is-hoverable');
+    table_render.classList.add('is-fullwidth');
     table_render.id = 'table-view';
     table_render.appendChild(createTableHead(table_head));
     table_render.appendChild(createTableBody(table_head, table_dict));
@@ -45,21 +50,10 @@ function createEachTableHead(elementName) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const table_name = fetch_table["table_name"];
-    const table_head = fetch_table["schema"];
-    let table_dict = fetch_table["table_dict"];
-
     const table_selector = document.querySelector("#render-table");
 
-    if (table_type === "professor") {
-        table_selector.appendChild(createTable(table_name, table_head, table_dict));
-    }else if (table_type === "gender") {
-        table_selector.appendChild(createTable(table_name, table_head, table_dict));
-    } else if (table_type === "concentration") {
-        table_selector.appendChild(createTable(table_name, table_head, table_dict));
-    } else if (table_type === "job_merged_table") {
-        table_selector.appendChild(createTable(table_name, table_head, table_dict));
-    } else if (table_type === "company") {
-        table_selector.appendChild(createTable(table_name, table_head, table_dict));
+    if (table_type === "professor" || table_type === "gender" || table_type === "concentration" ||
+        table_type === "job_merged_table" || table_type === "company" || table_type === "alumni") {
+        table_selector.appendChild(createTable(table_type, table_columns, table_dict));
     }
 });

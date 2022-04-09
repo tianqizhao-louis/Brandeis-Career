@@ -4,7 +4,8 @@
 
 <script>
     let table_type = {{ table_type | tojson }}
-    let fetch_table = {{ fetch_table | tojson }}
+    let table_columns = {{ table_columns | tojson }}
+    let table_dict = {{ table_dict | tojson }}
 </script>
 
 <script type="text/javascript" src="{{ url_for('static', filename = 'admin/table_render.js') }}"></script>
@@ -17,8 +18,7 @@
 
 <div class="columns">
     <div class="column is-12">
-        <div id="render-table" class="block has-text-centered">
-
+        <div id="render-table" class="block has-text-centered table-container">
         </div>
     </div>
 </div>
