@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<script>
+    let table_type = {{ table_type | tojson }}
+</script>
+
+<script type="text/javascript" src="{{ url_for('static', filename = 'admin/table_insert.js') }}"></script>
+
+<div class="columns">
+    <div class="column is-12">
+        <h3 class="title is-3">Insert Into {{ table_type }} Table</h3>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-12">
+        <div id="success-placeholder">
+
+        </div>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-12">
+        <div class="box">
+            <div id="property-placeholder">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

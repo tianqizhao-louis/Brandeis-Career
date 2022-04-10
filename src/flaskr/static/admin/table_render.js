@@ -1,8 +1,37 @@
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector("#operation-placeholder").style.display = 'none';
+
+    const breadcrumb_selector = document.querySelector("#breadcrumb-control");
+    breadcrumb_selector.appendChild(createBreadCrumb(table_type));
+
+    const table_selector = document.querySelector("#render-table");
+
+    if (table_type === "professor" || table_type === "gender" || table_type === "concentration" ||
+        table_type === "job_merged_table" || table_type === "company" || table_type === "alumni") {
+        table_selector.appendChild(createTable(table_type, table_columns, table_dict));
+    }
+
+    if (table_type === "professor") {
+        document.querySelector("#operation-placeholder").style.display = '';
+        const insert_button_selector = document.querySelector("#insert-button-placeholder");
+        insert_button_selector.appendChild(createInsertButton(table_type));
+    }
+});
+
+function createInsertButton(table_type) {
+    let insertButton = document.createElement('button');
+    insertButton.classList.add("button");
+    insertButton.classList.add("is-primary");
+    insertButton.setAttribute("id", "insert-to-table");
+    insertButton.textContent = "Insert A New Record";
+    insertButton.addEventListener("click", function () {
+        window.location.href = "/admin/table/insert/" + table_type;
+    });
+    return insertButton;
+}
+
 function createTableBody(table_head, table_dict) {
     let tbody = document.createElement('tbody');
-    // table_head.forEach(function (eachHead, index) {
-    //
-    // });
     Object.keys(table_dict).forEach(function (key) {
         let tr = document.createElement('tr');
         let this_dict = table_dict[key];
@@ -49,11 +78,26 @@ function createEachTableHead(elementName) {
     return th;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const table_selector = document.querySelector("#render-table");
+function createBreadCrumb(table_type) {
+    let bc = document.createElement('ul');
 
-    if (table_type === "professor" || table_type === "gender" || table_type === "concentration" ||
-        table_type === "job_merged_table" || table_type === "company" || table_type === "alumni") {
-        table_selector.appendChild(createTable(table_type, table_columns, table_dict));
-    }
-});
+    let home_bc = document.createElement('li');
+    let home_bc_link = document.createElement('a');
+    home_bc_link.setAttribute('href', '/admin');
+    home_bc_link.textContent = "Admin Portal";
+    home_bc.appendChild(home_bc_link);
+
+    bc.appendChild(home_bc);
+
+    let table_bc = document.createElement('li');
+    table_bc.classList.add('is-active');
+    let table_bc_link = document.createElement('a');
+    table_bc_link.setAttribute('href', '#');
+    table_bc_link.setAttribute('aria-current', 'page');
+    table_bc_link.textContent = table_type
+    table_bc.appendChild(table_bc_link);
+
+    bc.appendChild(table_bc);
+
+    return bc;
+}

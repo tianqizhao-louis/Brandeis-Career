@@ -18,9 +18,10 @@ def admin():
 def render_table(table_type):
     load_dotenv()
     database_server = Database(host=os.environ.get("MYSQL_HOST"),
-                      user=os.environ.get("MYSQL_USER"),
-                      password=os.environ.get("MYSQL_PASSWORD"),
-                      database=os.environ.get("MYSQL_DATABASE"))
+                               port=os.environ.get("MYSQL_PORT"),
+                               user=os.environ.get("MYSQL_USER"),
+                               password=os.environ.get("MYSQL_PASSWORD"),
+                               database=os.environ.get("MYSQL_DATABASE"))
 
     data_tuple = None
     if table_type == 'professor':
@@ -59,3 +60,37 @@ def render_table(table_type):
                                table_type=data_tuple[0],
                                table_columns=data_tuple[1],
                                table_dict=data_tuple[2])
+
+
+@bp.route('/admin/table/insert/<string:table_type>', methods=["GET"])
+def insert_new_record(table_type):
+    load_dotenv()
+    database_server = Database(host=os.environ.get("MYSQL_HOST"),
+                               port=os.environ.get("MYSQL_PORT"),
+                               user=os.environ.get("MYSQL_USER"),
+                               password=os.environ.get("MYSQL_PASSWORD"),
+                               database=os.environ.get("MYSQL_DATABASE"))
+    if table_type == 'professor':
+        return render_template("admin/table_insert.html",
+                               table_type=table_type)
+
+
+@bp.route('/admin/table/insert/ajax/<string:table_type>', methods=["POST"])
+def ajax_insert_new_record(table_type):
+    load_dotenv()
+    database_server = Database(host=os.environ.get("MYSQL_HOST"),
+                               port=os.environ.get("MYSQL_PORT"),
+                               user=os.environ.get("MYSQL_USER"),
+                               password=os.environ.get("MYSQL_PASSWORD"),
+                               database=os.environ.get("MYSQL_DATABASE"))
+    if table_type == 'professor':
+        request.get_data()
+        json_data = request.json
+
+        flat_list = [json_data["firstName"], json_data["lastName"]]
+        inserted_id = database_server.insert_into_professor_table(flat_list)
+
+        return {
+            "database_status": "Success",
+            "inserted_id": inserted_id
+        }
