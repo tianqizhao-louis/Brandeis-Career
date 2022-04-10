@@ -1,10 +1,9 @@
 import os
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, flash, g, redirect, render_template, request, url_for, current_app
 )
 from .db import Database
-from dotenv import load_dotenv
 
 bp = Blueprint('portal', __name__)
 
@@ -16,12 +15,11 @@ def admin():
 
 @bp.route('/admin/table/<string:table_type>', methods=['GET'])
 def render_table(table_type):
-    load_dotenv()
-    database_server = Database(host=os.environ.get("MYSQL_HOST"),
-                               port=os.environ.get("MYSQL_PORT"),
-                               user=os.environ.get("MYSQL_USER"),
-                               password=os.environ.get("MYSQL_PASSWORD"),
-                               database=os.environ.get("MYSQL_DATABASE"))
+    database_server = Database(host=current_app.config["MYSQL_HOST"],
+                               port=current_app.config["MYSQL_PORT"],
+                               user=current_app.config["MYSQL_USER"],
+                               password=current_app.config["MYSQL_PASSWORD"],
+                               database=current_app.config["MYSQL_DATABASE"])
 
     data_tuple = None
     if table_type == 'professor':
@@ -64,12 +62,11 @@ def render_table(table_type):
 
 @bp.route('/admin/table/insert/<string:table_type>', methods=["GET"])
 def insert_new_record(table_type):
-    load_dotenv()
-    database_server = Database(host=os.environ.get("MYSQL_HOST"),
-                               port=os.environ.get("MYSQL_PORT"),
-                               user=os.environ.get("MYSQL_USER"),
-                               password=os.environ.get("MYSQL_PASSWORD"),
-                               database=os.environ.get("MYSQL_DATABASE"))
+    database_server = Database(host=current_app.config["MYSQL_HOST"],
+                               port=current_app.config["MYSQL_PORT"],
+                               user=current_app.config["MYSQL_USER"],
+                               password=current_app.config["MYSQL_PASSWORD"],
+                               database=current_app.config["MYSQL_DATABASE"])
     if table_type == 'professor':
         return render_template("admin/table_insert.html",
                                table_type=table_type)
@@ -77,12 +74,11 @@ def insert_new_record(table_type):
 
 @bp.route('/admin/table/insert/ajax/<string:table_type>', methods=["POST"])
 def ajax_insert_new_record(table_type):
-    load_dotenv()
-    database_server = Database(host=os.environ.get("MYSQL_HOST"),
-                               port=os.environ.get("MYSQL_PORT"),
-                               user=os.environ.get("MYSQL_USER"),
-                               password=os.environ.get("MYSQL_PASSWORD"),
-                               database=os.environ.get("MYSQL_DATABASE"))
+    database_server = Database(host=current_app.config["MYSQL_HOST"],
+                               port=current_app.config["MYSQL_PORT"],
+                               user=current_app.config["MYSQL_USER"],
+                               password=current_app.config["MYSQL_PASSWORD"],
+                               database=current_app.config["MYSQL_DATABASE"])
     if table_type == 'professor':
         request.get_data()
         json_data = request.json
