@@ -70,6 +70,8 @@ def insert_new_record(table_type):
     if table_type == 'professor':
         return render_template("admin/table_insert.html",
                                table_type=table_type)
+    elif table_type == 'gender':
+        return 'success'
 
 
 @bp.route('/admin/table/insert/ajax/<string:table_type>', methods=["POST"])

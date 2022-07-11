@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         table_selector.appendChild(createTable(table_type, table_columns, table_dict));
     }
 
-    if (table_type === "professor") {
+    if (table_type === "professor" || table_type === "gender") {
         document.querySelector("#operation-placeholder").style.display = '';
         const insert_button_selector = document.querySelector("#insert-button-placeholder");
         insert_button_selector.appendChild(createInsertButton(table_type));

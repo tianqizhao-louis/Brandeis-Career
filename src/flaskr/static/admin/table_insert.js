@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const property_selector = document.querySelector('#property-placeholder');
     if (table_type === "professor") {
-        property_selector.appendChild(createProfessorForm(table_type));
+        property_selector.appendChild(createProfessorForm());
         addProfessorSubmitButtonAction();
     }
 });
 
-function createProfessorForm(table_type) {
+function createProfessorForm() {
     let form = document.createElement('form');
     form.setAttribute("id", "professor-form");
 
@@ -109,11 +109,11 @@ function sendProfessorAjax(jsonFormData) {
             window.location.href = "/admin/table/professor";
         })
         .catch((error) => {
-            retryFetch(url, requestOptions);
+            retryProfessorFetch(url, requestOptions);
         });
 }
 
-function retryFetch(url, requestOptions) {
+function retryProfessorFetch(url, requestOptions) {
     fetch(url, requestOptions)
         .then(response => response.json())
         .then(data => {
